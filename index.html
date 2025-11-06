@@ -3,201 +3,393 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trắc nghiệm EQ - Đo chỉ số Trí tuệ cảm xúc</title>
+    <title>Trắc nghiệm Chỉ số EQ</title>
     <style>
         body {
-            font-family: 'Arial', sans-serif;
-            line-height: 1.6;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #f5f5f5;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea, #764ba2);
             color: #333;
+            padding: 20px;
+            margin: 0;
         }
         .container {
-            background-color: white;
+            max-width: 800px;
+            margin: 40px auto;
+            background: white;
             padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
         }
         h1 {
-            color: #2c3e50;
             text-align: center;
+            color: #5a4fcf;
+            margin-bottom: 30px;
+        }
+        .question-container {
+            margin-bottom: 30px;
         }
         .question {
-            margin-bottom: 20px;
-            padding: 15px;
-            background-color: #f9f9f9;
-            border-radius: 5px;
-            display: none;
-        }
-        .active {
-            display: block;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #2c3e50;
         }
         .options label {
             display: block;
             margin: 10px 0;
+            padding: 12px;
+            background: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 8px;
             cursor: pointer;
+            transition: all 0.2s;
+        }
+        .options label:hover {
+            background: #e9ecef;
+        }
+        input[type="radio"] {
+            margin-right: 10px;
         }
         button {
-            background-color: #3498db;
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background: #6c5ce7;
             color: white;
             border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
+            border-radius: 8px;
+            font-size: 18px;
             cursor: pointer;
-            font-size: 16px;
+            margin-top: 20px;
+            transition: background 0.3s;
         }
         button:hover {
-            background-color: #2980b9;
+            background: #5a4fcf;
         }
         #result {
             display: none;
-            margin-top: 30px;
             padding: 20px;
-            background-color: #e8f4fc;
-            border-radius: 5px;
+            background: #e3f2fd;
+            border-radius: 10px;
+            margin-top: 30px;
+            text-align: center;
         }
-        .progress-bar {
-            width: 100%;
-            background-color: #e0e0e0;
-            border-radius: 5px;
-            margin: 20px 0;
+        #result h2 {
+            color: #0d47a1;
+        }
+        #result p {
+            font-size: 18px;
+            line-height: 1.6;
         }
         .progress {
-            height: 20px;
-            background-color: #3498db;
-            border-radius: 5px;
-            width: 0%;
-            transition: width 0.5s;
+            text-align: center;
+            font-size: 14px;
+            color: #777;
+            margin-bottom: 20px;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Trắc nghiệm EQ - Trí tuệ Cảm xúc</h1>
-        <div class="progress-bar">
-            <div class="progress" id="progress"></div>
-        </div>
-        
+        <h1>✨ Trắc nghiệm Đo Lường Chỉ Số EQ ✨</h1>
+        <div class="progress" id="progress">Câu hỏi 1 / 20</div>
+
         <div id="quiz">
-            <div class="question" id="q1">
-                <h3>Câu 1: Khi gặp khó khăn, tôi thường:</h3>
-                <div class="options">
-                    <label><input type="radio" name="q1" value="1"> a. Tìm người chia sẻ ngay lập tức</label>
-                    <label><input type="radio" name="q1" value="2"> b. Bình tĩnh suy nghĩ cách giải quyết</label>
-                    <label><input type="radio" name="q1" value="3"> c. Cảm thấy bối rối và lo lắng</label>
-                    <label><input type="radio" name="q1" value="4"> d. Tự trách bản thân mình</label>
-                </div>
-            </div>
-
-            <!-- Thêm 19 câu hỏi tương tự ở đây -->
-            <!-- Để ngắn gọn, tôi sẽ không hiển thị toàn bộ 20 câu -->
-            <!-- Bạn có thể thêm các câu hỏi khác với cấu trúc tương tự -->
-
-            <div class="question" id="q20">
-                <h3>Câu 20: Khi nhận được phản hồi tiêu cực, tôi thường:</h3>
-                <div class="options">
-                    <label><input type="radio" name="q20" value="1"> a. Cảm thấy tổn thương và phòng thủ</label>
-                    <label><input type="radio" name="q20" value="2"> b. Lắng nghe và tìm cách cải thiện</label>
-                    <label><input type="radio" name="q20" value="3"> c. Phủ nhận vấn đề</label>
-                    <label><input type="radio" name="q20" value="4"> d. Tức giận và phản ứng ngay lập tức</label>
-                </div>
-            </div>
-
-            <button id="prevBtn" onclick="prevQuestion()">Câu trước</button>
-            <button id="nextBtn" onclick="nextQuestion()">Câu tiếp theo</button>
-            <button id="submitBtn" style="display: none;" onclick="submitQuiz()">Xem kết quả</button>
+            <!-- Các câu hỏi sẽ được chèn vào đây bằng JS -->
         </div>
+
+        <button id="next-btn">Tiếp theo</button>
 
         <div id="result">
-            <h2>Kết quả EQ của bạn:</h2>
-            <p id="score"></p>
+            <h2>Kết quả Trắc nghiệm EQ của bạn</h2>
+            <p id="score">Điểm số: </p>
             <p id="interpretation"></p>
         </div>
     </div>
 
     <script>
-        let currentQuestion = 1;
-        const totalQuestions = 20;
-        const answers = new Array(totalQuestions + 1).fill(0);
-        
-        // Hiển thị câu hỏi đầu tiên
-        showQuestion(currentQuestion);
-        updateProgressBar();
-
-        function showQuestion(n) {
-            // Ẩn tất cả câu hỏi
-            const questions = document.getElementsByClassName('question');
-            for (let i = 0; i < questions.length; i++) {
-                questions[i].classList.remove('active');
+        const quizData = [
+            {
+                question: "Khi gặp một người đang buồn, bạn thường:",
+                options: [
+                    "Không biết phải làm gì nên tránh xa.",
+                    "Hỏi han nhẹ nhàng và lắng nghe họ.",
+                    "Cố gắng làm họ cười bằng cách đùa.",
+                    "Khuyên họ nên mạnh mẽ lên."
+                ],
+                scores: [1, 4, 3, 2]
+            },
+            {
+                question: "Bạn phản ứng thế nào khi bị phê bình?",
+                options: [
+                    "Cảm thấy tổn thương và muốn bỏ cuộc.",
+                    "Bình tĩnh tiếp thu và rút kinh nghiệm.",
+                    "Bực tức và phản bác lại ngay.",
+                    "Giả vờ không quan tâm nhưng trong lòng khó chịu."
+                ],
+                scores: [1, 4, 2, 3]
+            },
+            {
+                question: "Khi đồng nghiệp căng thẳng, bạn:",
+                options: [
+                    "Không để ý, vì đó không phải việc của bạn.",
+                    "Chủ động hỏi xem có thể giúp gì không.",
+                    "Nói đùa để giảm bớt không khí căng thẳng.",
+                    "Báo cho quản lý biết để xử lý."
+                ],
+                scores: [1, 4, 3, 2]
+            },
+            {
+                question: "Bạn xử lý cảm xúc tiêu cực (giận, buồn, thất vọng) như thế nào?",
+                options: [
+                    "Kìm nén và không cho ai biết.",
+                    "Tìm cách giải tỏa lành mạnh (viết nhật ký, tập thể dục...).",
+                    "Trút giận lên người khác hoặc đồ vật.",
+                    "Tự nhủ rằng mọi chuyện rồi sẽ qua."
+                ],
+                scores: [1, 4, 2, 3]
+            },
+            {
+                question: "Khi tranh cãi với người yêu/bạn thân, bạn thường:",
+                options: [
+                    "Im lặng và không nói chuyện vài ngày.",
+                    "Nói ra cảm xúc của mình một cách điềm tĩnh.",
+                    "Nói những lời gây tổn thương để thắng cuộc.",
+                    "Xin lỗi trước dù chưa hiểu vấn đề."
+                ],
+                scores: [1, 4, 2, 3]
+            },
+            {
+                question: "Bạn có dễ dàng nhận ra cảm xúc của người khác qua nét mặt, giọng nói không?",
+                options: [
+                    "Rất khó, tôi thường không để ý.",
+                    "Tôi khá nhạy cảm và thường đoán đúng.",
+                    "Chỉ khi họ biểu hiện quá rõ ràng.",
+                    "Tôi hay hiểu lầm cảm xúc của họ."
+                ],
+                scores: [1, 4, 3, 2]
+            },
+            {
+                question: "Khi có quá nhiều việc dồn dập, bạn:",
+                options: [
+                    "Hoảng loạn và không biết bắt đầu từ đâu.",
+                    "Lập kế hoạch ưu tiên và xử lý từng việc.",
+                    "Làm đại một việc nào đó trước.",
+                    "Nhờ người khác giúp hoặc trì hoãn."
+                ],
+                scores: [1, 4, 2, 3]
+            },
+            {
+                question: "Bạn có thường xuyên suy nghĩ về hành động của mình ảnh hưởng đến người khác không?",
+                options: [
+                    "Hiếm khi, tôi sống cho bản thân là chính.",
+                    "Thường xuyên, tôi luôn cân nhắc để không làm ai tổn thương.",
+                    "Chỉ khi có người phàn nàn.",
+                    "Tôi nghĩ nhiều nhưng vẫn hay vô tình làm người khác buồn."
+                ],
+                scores: [1, 4, 2, 3]
+            },
+            {
+                question: "Khi ai đó khoe khoang thành tích, bạn cảm thấy:",
+                options: [
+                    "Khó chịu và muốn “dìm” họ.",
+                    "Vui cho họ và khen ngợi chân thành.",
+                    "Ghen tị nhưng không biểu lộ.",
+                    "Không quan tâm, mỗi người một hoàn cảnh."
+                ],
+                scores: [1, 4, 2, 3]
+            },
+            {
+                question: "Bạn đối mặt với thất bại như thế nào?",
+                options: [
+                    "Tự trách mình và cảm thấy mất hết động lực.",
+                    "Rút kinh nghiệm và bắt đầu lại với tinh thần mới.",
+                    "Đổ lỗi cho hoàn cảnh hoặc người khác.",
+                    "Cố gắng quên đi và chuyển sang việc khác."
+                ],
+                scores: [1, 4, 2, 3]
+            },
+            {
+                question: "Bạn có khả năng kiềm chế cơn giận trong tình huống nóng nảy không?",
+                options: [
+                    "Gần như không thể, tôi hay bộc phát.",
+                    "Tôi hít thở sâu và tự nhủ bình tĩnh.",
+                    "Tôi im lặng nhưng trong lòng sôi sục.",
+                    "Tôi rời khỏi nơi đó để tránh xung đột."
+                ],
+                scores: [1, 4, 2, 3]
+            },
+            {
+                question: "Khi bạn bè nhờ giúp đỡ lúc bạn đang bận, bạn:",
+                options: [
+                    "Từ chối thẳng vì mình cũng có việc.",
+                    "Sắp xếp lại công việc để hỗ trợ họ nếu cần thiết.",
+                    "Giúp qua loa cho xong chuyện.",
+                    "Hứa giúp nhưng sau đó quên hoặc trì hoãn."
+                ],
+                scores: [1, 4, 2, 3]
+            },
+            {
+                question: "Bạn có thường xuyên cảm thấy biết ơn về những điều nhỏ nhặt trong cuộc sống?",
+                options: [
+                    "Ít khi, tôi hay tập trung vào những thứ lớn lao hơn.",
+                    "Rất thường xuyên, tôi ghi nhận và trân trọng từng điều.",
+                    "Chỉ khi có ai đó nhắc nhở.",
+                    "Tôi biết ơn nhưng hiếm khi thể hiện ra."
+                ],
+                scores: [1, 4, 2, 3]
+            },
+            {
+                question: "Khi nghe người khác kể chuyện buồn, bạn:",
+                options: [
+                    "Lắng nghe một cách máy móc, không nhập tâm.",
+                    "Đồng cảm thật sự và đưa ra lời khuyên phù hợp.",
+                    "Cố gắng thay đổi chủ đề để họ vui lên.",
+                    "Cảm thấy phiền vì bị “đổ”负面情绪."
+                ],
+                scores: [1, 4, 3, 2]
+            },
+            {
+                question: "Bạn có dễ dàng tha thứ cho người làm tổn thương mình không?",
+                options: [
+                    "Không bao giờ, tôi rất khó quên.",
+                    "Nếu họ chân thành xin lỗi và sửa sai, tôi sẵn sàng tha thứ.",
+                    "Tôi tha thứ nhưng không còn tin tưởng như trước.",
+                    "Tôi giả vờ tha thứ nhưng trong lòng vẫn để bụng."
+                ],
+                scores: [1, 4, 3, 2]
+            },
+            {
+                question: "Khi ở trong nhóm, bạn thường:",
+                options: [
+                    "Chỉ quan tâm đến phần việc của mình.",
+                    "Chủ động hòa giải mâu thuẫn và kết nối mọi người.",
+                    "Theo số đông để tránh xung đột.",
+                    "Muốn làm lãnh đạo để kiểm soát mọi thứ."
+                ],
+                scores: [1, 4, 3, 2]
+            },
+            {
+                question: "Bạn phản ứng thế nào khi kế hoạch bị đổ bể bất ngờ?",
+                options: [
+                    "Tức giận và đổ lỗi cho người khác.",
+                    "Bình tĩnh tìm phương án thay thế.",
+                    "Buồn bã và bỏ cuộc.",
+                    "Chấp nhận và hy vọng may mắn lần sau."
+                ],
+                scores: [1, 4, 2, 3]
+            },
+            {
+                question: "Bạn có thường xuyên đặt mình vào vị trí người khác để thấu hiểu họ?",
+                options: [
+                    "Hiếm khi, tôi nghĩ theo góc nhìn của mình là đủ.",
+                    "Luôn cố gắng, vì tôi tin đó là chìa khóa của giao tiếp.",
+                    "Chỉ khi tôi thực sự tò mò hoặc cần thiết.",
+                    "Tôi hiểu họ nhưng không đồng tình."
+                ],
+                scores: [1, 4, 3, 2]
+            },
+            {
+                question: "Khi đạt được thành công, bạn:",
+                options: [
+                    "Tự hào và khoe với tất cả mọi người.",
+                    "Biết ơn những người đã giúp đỡ và chia sẻ niềm vui.",
+                    "Cảm thấy đó là điều đương nhiên.",
+                    "Lo lắng rằng mình sẽ không duy trì được."
+                ],
+                scores: [2, 4, 1, 3]
+            },
+            {
+                question: "Bạn đánh giá thế nào về khả năng kiểm soát cảm xúc của mình?",
+                options: [
+                    "Rất kém, tôi hay bị cảm xúc chi phối.",
+                    "Rất tốt, tôi luôn giữ được bình tĩnh và lý trí.",
+                    "Tùy hoàn cảnh, đôi khi tôi mất kiểm soát.",
+                    "Tôi che giấu cảm xúc rất giỏi, dù bên trong rối bời."
+                ],
+                scores: [1, 4, 3, 2]
             }
-            
-            // Hiển thị câu hỏi hiện tại
-            document.getElementById(`q${n}`).classList.add('active');
-            
-            // Cập nhật nút điều hướng
-            document.getElementById('prevBtn').style.display = (n === 1) ? 'none' : 'inline-block';
-            document.getElementById('nextBtn').style.display = (n === totalQuestions) ? 'none' : 'inline-block';
-            document.getElementById('submitBtn').style.display = (n === totalQuestions) ? 'inline-block' : 'none';
+        ];
+
+        const quizContainer = document.getElementById('quiz');
+        const nextButton = document.getElementById('next-btn');
+        const resultContainer = document.getElementById('result');
+        const scoreDisplay = document.getElementById('score');
+        const interpretationDisplay = document.getElementById('interpretation');
+        const progressDisplay = document.getElementById('progress');
+
+        let currentQuestion = 0;
+        let userScore = 0;
+
+        function loadQuestion() {
+            const q = quizData[currentQuestion];
+            progressDisplay.textContent = `Câu hỏi ${currentQuestion + 1} / 20`;
+
+            let optionsHtml = '';
+            q.options.forEach((option, index) => {
+                optionsHtml += `
+                    <label>
+                        <input type="radio" name="answer" value="${index}">
+                        ${option}
+                    </label>
+                `;
+            });
+
+            quizContainer.innerHTML = `
+                <div class="question-container">
+                    <div class="question">${q.question}</div>
+                    <div class="options">${optionsHtml}</div>
+                </div>
+            `;
         }
 
-        function nextQuestion() {
-            saveAnswer();
-            if (currentQuestion < totalQuestions) {
-                currentQuestion++;
-                showQuestion(currentQuestion);
-                updateProgressBar();
+        function handleNext() {
+            const selectedOption = document.querySelector('input[name="answer"]:checked');
+            if (!selectedOption) {
+                alert("Vui lòng chọn một đáp án!");
+                return;
             }
-        }
 
-        function prevQuestion() {
-            if (currentQuestion > 1) {
-                currentQuestion--;
-                showQuestion(currentQuestion);
-                updateProgressBar();
-            }
-        }
+            const answerIndex = parseInt(selectedOption.value);
+            userScore += quizData[currentQuestion].scores[answerIndex];
 
-        function saveAnswer() {
-            const selectedOption = document.querySelector(`input[name="q${currentQuestion}"]:checked`);
-            if (selectedOption) {
-                answers[currentQuestion] = parseInt(selectedOption.value);
-            }
-        }
+            currentQuestion++;
 
-        function updateProgressBar() {
-            const progress = (currentQuestion / totalQuestions) * 100;
-            document.getElementById('progress').style.width = `${progress}%`;
-        }
-
-        function submitQuiz() {
-            saveAnswer();
-            
-            // Tính điểm (đây chỉ là ví dụ, điểm số thực tế cần được tính dựa trên bảng điểm chuẩn)
-            const totalScore = answers.reduce((sum, val) => sum + val, 0);
-            const maxScore = totalQuestions * 4;
-            const eqScore = Math.round((totalScore / maxScore) * 200);
-            
-            // Hiển thị kết quả
-            document.getElementById('quiz').style.display = 'none';
-            document.getElementById('result').style.display = 'block';
-            document.getElementById('score').textContent = `Chỉ số EQ của bạn là: ${eqScore}`;
-            
-            // Đánh giá kết quả
-            let interpretation = "";
-            if (eqScore >= 140) {
-                interpretation = "Bạn có trí tuệ cảm xúc rất cao. Bạn hiểu và kiểm soát tốt cảm xúc của bản thân, đồng thời có khả năng thấu hiểu người khác.";
-            } else if (eqScore >= 120) {
-                interpretation = "Bạn có trí tuệ cảm xúc tốt. Bạn biết cách quản lý cảm xúc và có khả năng giao tiếp hiệu quả.";
-            } else if (eqScore >= 90) {
-                interpretation = "Chỉ số EQ của bạn ở mức trung bình. Bạn có khả năng nhận biết cảm xúc nhưng đôi khi cần cải thiện kỹ năng quản lý chúng.";
+            if (currentQuestion < quizData.length) {
+                loadQuestion();
             } else {
-                interpretation = "Bạn cần phát triển thêm trí tuệ cảm xúc. Hãy tập trung vào việc hiểu và kiểm soát cảm xúc của bản thân tốt hơn.";
+                showResult();
             }
-            
-            document.getElementById('interpretation').textContent = interpretation;
         }
+
+        function showResult() {
+            document.getElementById('quiz').style.display = 'none';
+            nextButton.style.display = 'none';
+            resultContainer.style.display = 'block';
+
+            const maxScore = quizData.length * 4; // Mỗi câu max 4 điểm
+            const percentage = Math.round((userScore / maxScore) * 100);
+
+            scoreDisplay.innerHTML = `Điểm số: <strong>${userScore}/${maxScore}</strong> (${percentage}%)`;
+
+            let interpretation = "";
+            if (percentage >= 80) {
+                interpretation = "🌟 <strong>EQ RẤT CAO</strong> - Bạn có khả năng thấu hiểu, đồng cảm và kiểm soát cảm xúc xuất sắc. Bạn là người đáng tin cậy trong các mối quan hệ!";
+            } else if (percentage >= 60) {
+                interpretation = "😊 <strong>EQ CAO</strong> - Bạn có trí tuệ cảm xúc tốt, biết lắng nghe và chia sẻ. Hãy tiếp tục rèn luyện để trở nên tuyệt vời hơn!";
+            } else if (percentage >= 40) {
+                interpretation = "😐 <strong>EQ TRUNG BÌNH</strong> - Bạn có thể cải thiện khả năng đồng cảm và kiểm soát cảm xúc. Hãy dành thời gian quan sát và lắng nghe nhiều hơn.";
+            } else {
+                interpretation = "😔 <strong>EQ THẤP</strong> - Bạn nên học cách thấu hiểu cảm xúc bản thân và người khác. Đừng lo, EQ có thể rèn luyện được qua thời gian!";
+            }
+
+            interpretationDisplay.innerHTML = interpretation;
+        }
+
+        nextButton.addEventListener('click', handleNext);
+
+        // Load câu hỏi đầu tiên
+        loadQuestion();
     </script>
 </body>
 </html>
